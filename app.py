@@ -608,9 +608,7 @@ class Miner:
             elif float(intensity) < 1:
                 intensity = 1
 
-            threads = ""
-            if not threads:
-                threads = cpu_count()
+            threads = cpu_count()
 
             if int(threads) > 8:
                 threads = 8
@@ -626,7 +624,7 @@ class Miner:
                   + "2" + Style.NORMAL + " - " + get_string("medium_diff")
                   + "\n" + Style.BRIGHT
                   + "3" + Style.NORMAL + " - " + get_string("net_diff"))
-            start_diff = "2"
+            start_diff = "3"
             if start_diff == "1":
                 start_diff = "LOW"
             elif start_diff == "3":
@@ -634,27 +632,9 @@ class Miner:
             else:
                 start_diff = "MEDIUM"
 
-            rig_id = input(Style.NORMAL + get_string("ask_rig_identifier")
-                           + Style.BRIGHT)
-            if rig_id.lower() == "y":
-                rig_id = str(input(Style.NORMAL + get_string("ask_rig_name")
-                                   + Style.BRIGHT))
-            else:
-                rig_id = "None"
+            rig_id = "None"
 
-            donation_level = '0'
-            if os.name == 'nt' or os.name == 'posix':
-                donation_level = input(Style.NORMAL
-                                       + get_string('ask_donation_level')
-                                       + Style.BRIGHT)
-
-            donation_level = sub(r'\D', '', donation_level)
-            if donation_level == '':
-                donation_level = 1
-            if float(donation_level) > int(5):
-                donation_level = 5
-            if float(donation_level) < int(0):
-                donation_level = 0
+            donation_level = 0
 
             configparser["PC Miner"] = {
                 "username":    username,
