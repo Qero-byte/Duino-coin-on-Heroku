@@ -951,8 +951,8 @@ if __name__ == "__main__":
     Fasthash.load()
     Fasthash.init()
 
-    Donate.load(int(user_settings["donate"]))
-    Donate.start(int(user_settings["donate"]))
+    #Donate.load(int(user_settings["donate"]))
+    #Donate.start(int(user_settings["donate"]))
 
     """
     Generate a random number that's used to
