@@ -960,7 +960,7 @@ if __name__ == "__main__":
     """
     single_miner_id = randint(0, 2811)
 
-    threads = int(user_settings["threads"])
+    #threads = int(user_settings["threads"])
     if threads > 12:
         threads = 12
         pretty_print(Style.BRIGHT
