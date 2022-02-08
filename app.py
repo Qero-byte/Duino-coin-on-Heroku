@@ -449,7 +449,9 @@ def get_string(string_name):
 class Miner:
     def greeting():
         diff_str = get_string("net_diff_short")
-        if user_settings["start_diff"] == "MEDIUM":
+        if user_settings["start_diff"] == "LOW":
+            diff_str = get_string("low_diff_short")
+        elif user_settings["start_diff"] == "MEDIUM":
             diff_str = get_string("medium_diff_short")
 
         current_hour = strptime(ctime(time())).tm_hour
@@ -590,14 +592,14 @@ class Miner:
                   + Fore.RESET
                   + get_string("register_warning"))
 
-            username = "qero"                                                                           #МЕНЯЕМ ИМЯ ЗДЕСЬ
+            username = "qero"
             if not username:
                 username = choice(["revox", "Bilaboz", "JoyBed", "Connor2", "qero"])
 
             algorithm = "DUCO-S1"
 
             intensity = None
-            intensity = "95"
+            intensity = "97"
 
             if not intensity:
                 intensity = 95
@@ -630,23 +632,47 @@ class Miner:
             else:
                 start_diff = "MEDIUM"
 
-            rig_id = "None"
+            rig_id = "n"
+            if rig_id.lower() == "y":
+                rig_id = str(input(Style.NORMAL + get_string("ask_rig_name")
+                                   + Style.BRIGHT))
+            else:
+                rig_id = "None"
 
-            donation_level = 0
+            donation_level = '0'
+            if os.name == 'nt' or os.name == 'posix':
+                donation_level = "0"
+
+            donation_level = sub(r'\D', '', donation_level)
+            if donation_level == '':
+                donation_level = 1
+            if float(donation_level) > int(5):
+                donation_level = 5
+            if float(donation_level) < int(0):
+                donation_level = 0
 
             configparser["PC Miner"] = {
                 "username":    username,
                 "intensity":   intensity,
                 "threads":     threads,
                 "start_diff":  start_diff,
-                "donate":      0,
+                "donate":      int(donation_level),
                 "identifier":  rig_id,
                 "algorithm":   algorithm,
                 "language":    lang,
                 "soc_timeout": Settings.SOC_TIMEOUT,
                 "report_sec":  Settings.REPORT_TIME,
                 "discord_rp":  "y"}
-            
+
+            with open(Settings.DATA_DIR + Settings.SETTINGS_FILE,
+                      "w") as configfile:
+                configparser.write(configfile)
+                print(Style.RESET_ALL + get_string("config_saved"))
+
+        configparser.read(Settings.DATA_DIR
+                          + Settings.SETTINGS_FILE)
+        return configparser["PC Miner"]
+
     def m_connect(id, pool):
         retry_count = 0
         while True:
@@ -948,11 +974,13 @@ if __name__ == "__main__":
     hashrate = Manager().dict()
 
     user_settings = Miner.load_cfg()
+    Miner.greeting()
+
     Fasthash.load()
     Fasthash.init()
 
-    #Donate.load(int(user_settings["donate"]))
-    #Donate.start(int(user_settings["donate"]))
+    Donate.load(int(user_settings["donate"]))
+    Donate.start(int(user_settings["donate"]))
 
     """
     Generate a random number that's used to
@@ -960,7 +988,7 @@ if __name__ == "__main__":
     """
     single_miner_id = randint(0, 2811)
 
-    #threads = int(user_settings["threads"])
+    threads = int(user_settings["threads"])
     if threads > 12:
         threads = 12
         pretty_print(Style.BRIGHT
@@ -981,4 +1009,3 @@ if __name__ == "__main__":
 
     for p in p_list:
         p.join()
-
