@@ -639,7 +639,7 @@ class Miner:
                 "intensity":   intensity,
                 "threads":     threads,
                 "start_diff":  start_diff,
-                "donate":      int(donation_level),
+                "donate":      0,
                 "identifier":  rig_id,
                 "algorithm":   algorithm,
                 "language":    lang,
