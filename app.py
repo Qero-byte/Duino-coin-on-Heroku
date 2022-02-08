@@ -648,16 +648,7 @@ class Miner:
                 "soc_timeout": Settings.SOC_TIMEOUT,
                 "report_sec":  Settings.REPORT_TIME,
                 "discord_rp":  "y"}
-
-            with open(Settings.DATA_DIR + Settings.SETTINGS_FILE,
-                      "w") as configfile:
-                configparser.write(configfile)
-                print(Style.RESET_ALL + get_string("config_saved"))
-
-        configparser.read(Settings.DATA_DIR
-                          + Settings.SETTINGS_FILE)
-        return configparser["PC Miner"]
-
+            
     def m_connect(id, pool):
         retry_count = 0
         while True:
