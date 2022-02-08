@@ -449,9 +449,7 @@ def get_string(string_name):
 class Miner:
     def greeting():
         diff_str = get_string("net_diff_short")
-        if user_settings["start_diff"] == "LOW":
-            diff_str = get_string("low_diff_short")
-        elif user_settings["start_diff"] == "MEDIUM":
+        if user_settings["start_diff"] == "MEDIUM":
             diff_str = get_string("medium_diff_short")
 
         current_hour = strptime(ctime(time())).tm_hour
@@ -950,8 +948,6 @@ if __name__ == "__main__":
     hashrate = Manager().dict()
 
     user_settings = Miner.load_cfg()
-    Miner.greeting()
-
     Fasthash.load()
     Fasthash.init()
 
