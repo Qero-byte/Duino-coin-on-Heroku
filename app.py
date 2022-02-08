@@ -599,10 +599,7 @@ class Miner:
             algorithm = "DUCO-S1"
 
             intensity = None
-            intensity = sub(r"\D", "",
-                            input(Style.NORMAL +
-                                  get_string("ask_intensity") +
-                                  Style.BRIGHT))
+            intensity = "95"
 
             if not intensity:
                 intensity = 95
@@ -611,9 +608,7 @@ class Miner:
             elif float(intensity) < 1:
                 intensity = 1
 
-            threads = sub(r"\D", "",
-                          input(Style.NORMAL + get_string("ask_threads")
-                                + str(cpu_count()) + "): " + Style.BRIGHT))
+            threads = ""
             if not threads:
                 threads = cpu_count()
 
@@ -631,9 +626,7 @@ class Miner:
                   + "2" + Style.NORMAL + " - " + get_string("medium_diff")
                   + "\n" + Style.BRIGHT
                   + "3" + Style.NORMAL + " - " + get_string("net_diff"))
-            start_diff = sub(r"\D", "",
-                             input(Style.NORMAL + get_string("ask_difficulty")
-                                   + Style.BRIGHT))
+            start_diff = "2"
             if start_diff == "1":
                 start_diff = "LOW"
             elif start_diff == "3":
